@@ -28,7 +28,7 @@
         android:textColor="@color/black"
         android:layout_margin="10dp"
         android:padding="20dp"
-        android:drawableLeft="@drawable/user"
+        android:drawableStart="@drawable/user"
         android:drawablePadding="20dp"/>
 
     <EditText
@@ -42,7 +42,7 @@
         android:textColor="@color/black"
         android:layout_margin="10dp"
         android:padding="20dp"
-        android:drawableLeft="@drawable/user"
+        android:drawableStart="@drawable/user"
         android:drawablePadding="20dp"/>
 
     <EditText
@@ -56,7 +56,7 @@
         android:textColor="@color/black"
         android:layout_margin="10dp"
         android:padding="20dp"
-        android:drawableLeft="@drawable/email"
+        android:drawableStart="@drawable/email"
         android:drawablePadding="20dp"/>
 
 
@@ -71,7 +71,7 @@
         android:textColor="@color/black"
         android:layout_margin="10dp"
         android:padding="20dp"
-        android:drawableLeft="@drawable/password"
+        android:drawableStart="@drawable/password"
         android:drawablePadding="20dp"
         android:inputType="textPassword"/>
 
