@@ -82,7 +82,7 @@
         android:id="@+id/btnRegister"
         android:layout_below="@id/password"
         android:text="REGISTER"
-        android:backgroundTint="@color/design_default_color_secondary"
+        android:backgroundTint="@color/myColor"
         android:layout_centerHorizontal="true"
         android:layout_margin="20dp"
         />

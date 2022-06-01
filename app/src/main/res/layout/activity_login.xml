@@ -53,7 +53,7 @@
         android:id="@+id/btnLogin"
         android:layout_below="@id/password"
         android:text="LOGIN"
-        android:backgroundTint="@color/design_default_color_secondary"
+        android:backgroundTint="@color/myColor"
         android:layout_centerHorizontal="true"
         android:layout_margin="20dp"
         />
@@ -74,7 +74,7 @@
         android:id="@+id/register"
         android:layout_below="@id/forgotpass"
         android:text="Register"
-        android:textColor="@color/teal_200"
+        android:textColor="@color/myColor"
         android:layout_centerHorizontal="true"
         android:layout_margin="5px"/>
 
