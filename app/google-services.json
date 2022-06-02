@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "580491230861",
+    "firebase_url": "https://aplicatielicenta-2022-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "aplicatielicenta-2022",
+    "storage_bucket": "aplicatielicenta-2022.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:580491230861:android:390f744238964207e6ecc4",
+        "android_client_info": {
+          "package_name": "csie.aplicatielicenta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "580491230861-1j9joq0b5k8amv0ru8ovuibgiepebsrc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAy9_6-b6I9-UFYOrf2nRoBz5d1mUF77Zk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "580491230861-1j9joq0b5k8amv0ru8ovuibgiepebsrc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
