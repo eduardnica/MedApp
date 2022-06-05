@@ -9,6 +9,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="myColor">#0678AC</color>
 
+    <color name="pieChart1">#ffa600</color>
+    <color name="pieChart2">#7a5195</color>
+    <color name="pieChart3">#ef5675</color>
+    <color name="pieChart4">#003f5c</color>
+
     <color name="cardBackground">#FE1D1D2F</color>
     <color name="green">#7EC544</color>
     <color name="yellow">#FBC233</color>

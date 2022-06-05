@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/activity_main_swipe_refresh_layout"
+    android:id="@+id/activity_dashboard_swipe_refresh_layout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -38,7 +38,7 @@
                         android:padding="10dp">
 
                         <org.eazegraph.lib.charts.PieChart
-                            android:id="@+id/activity_main_piechart"
+                            android:id="@+id/activityDashboardPiechart"
                             android:layout_width="match_parent"
                             android:layout_height="150dp"
                             android:layout_weight="1"
@@ -66,13 +66,13 @@
                                 <View
                                     android:layout_width="15dp"
                                     android:layout_height="15dp"
-                                    android:background="@color/blue_pie"/>
+                                    android:background="@color/pieChart1"/>
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
-                                    android:text="Active"
+                                    android:text="Cases"
                                     android:textColor="#000000"
                                     android:textSize="13sp"/>
 
@@ -87,13 +87,13 @@
                                 <View
                                     android:layout_width="15dp"
                                     android:layout_height="15dp"
-                                    android:background="@color/green_pie"/>
+                                    android:background="@color/pieChart2"/>
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
-                                    android:text="Recovered"
+                                    android:text="Hospitalized"
                                     android:textColor="#000000"
                                     android:textSize="13sp"/>
 
@@ -108,7 +108,28 @@
                                 <View
                                     android:layout_width="15dp"
                                     android:layout_height="15dp"
-                                    android:background="@color/red_pie"/>
+                                    android:background="@color/pieChart3"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="10dp"
+                                    android:text="Intensive Care"
+                                    android:textColor="#000000"
+                                    android:textSize="13sp"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center_vertical">
+
+                                <View
+                                    android:layout_width="15dp"
+                                    android:layout_height="15dp"
+                                    android:background="@color/pieChart4"/>
 
                                 <TextView
                                     android:layout_width="wrap_content"

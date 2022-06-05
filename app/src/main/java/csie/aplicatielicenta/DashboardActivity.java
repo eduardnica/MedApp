@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.LinearLayout;
@@ -20,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import org.eazegraph.lib.charts.PieChart;
+import org.eazegraph.lib.models.PieModel;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,6 +65,14 @@ public class DashboardActivity extends AppCompatActivity {
         Init();
         FetchData();
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                FetchData();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
     }
 
 
@@ -73,12 +83,10 @@ public class DashboardActivity extends AppCompatActivity {
         twTotalTestsNumberNew = findViewById(R.id.twTotalTestsNumberNew);
         twTotalDeathsNumber = findViewById(R.id.twTotalDeathsNumber);
         twTotalDeathsNumberNew = findViewById(R.id.twTotalDeathsNumberNew);
-
         twIntensiveCareNumber = findViewById(R.id.twIntensiveCareNumber);
         twInfectedHospitalizedNumber = findViewById(R.id.twInfectedHospitalizedNumber);
-
-        pieChart = findViewById(R.id.activity_main_piechart);
-        swipeRefreshLayout = findViewById(R.id.activity_main_swipe_refresh_layout);
+        pieChart = findViewById(R.id.activityDashboardPiechart);
+        swipeRefreshLayout = findViewById(R.id.activity_dashboard_swipe_refresh_layout);
     }
 
 
@@ -87,7 +95,6 @@ public class DashboardActivity extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         String apiUrl = "https://www.graphs.ro/json.php";
-
         pieChart.clearChart();
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
@@ -98,8 +105,6 @@ public class DashboardActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         JSONArray covidRomania = null;
-                        JSONArray total_cases = null;
-                        JSONArray new_cases_today = null;
 
                         try {
                             covidRomania = response.getJSONArray("covid_romania");
@@ -114,10 +119,7 @@ public class DashboardActivity extends AppCompatActivity {
                             strIntensiveCareNumber = dataRomania.getString("intensive_care_right_now");
                             strInfectedHospitalizedNumber = dataRomania.getString("infected_hospitalized");
 
-
-
                             Handler delayProgress = new Handler();
-
                             delayProgress.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
@@ -129,6 +131,13 @@ public class DashboardActivity extends AppCompatActivity {
                                     twTotalDeathsNumberNew.setText("Today: +" + NumberFormat.getInstance().format(Integer.parseInt(strTotalDeathsNumberNew)));
                                     twIntensiveCareNumber.setText(NumberFormat.getInstance().format(Integer.parseInt(strIntensiveCareNumber)));
                                     twInfectedHospitalizedNumber.setText(NumberFormat.getInstance().format(Integer.parseInt(strInfectedHospitalizedNumber)));
+
+                                    pieChart.addPieSlice(new PieModel("Cases", Integer.parseInt(strTotalCasesNumberNew), Color.parseColor("#ffa600")));
+                                    pieChart.addPieSlice(new PieModel("Hospitalized", Integer.parseInt(strInfectedHospitalizedNumber), Color.parseColor("#7a5195")));
+                                    pieChart.addPieSlice(new PieModel("Intensive Care", Integer.parseInt(strIntensiveCareNumber), Color.parseColor("#ef5675")));
+                                    pieChart.addPieSlice(new PieModel("Deceased", Integer.parseInt(strTotalDeathsNumberNew), Color.parseColor("#003f5c")));
+                                    pieChart.startAnimation();
+
                                 }
                             },  1000);
 
@@ -136,9 +145,6 @@ public class DashboardActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-
-
 
                     }
                 },
@@ -151,13 +157,6 @@ public class DashboardActivity extends AppCompatActivity {
         );
         requestQueue.add(jsonObjectRequest);
 
-
-
-
     }
-
-
-
-
 
 }
