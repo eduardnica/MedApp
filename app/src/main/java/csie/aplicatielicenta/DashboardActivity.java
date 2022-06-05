@@ -2,15 +2,14 @@ package csie.aplicatielicenta;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -19,7 +18,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import org.eazegraph.lib.charts.PieChart;
 import org.eazegraph.lib.models.PieModel;
 import org.json.JSONArray;
@@ -34,24 +32,22 @@ public class DashboardActivity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private String appUrl;
-    private TextView twTotalCasesTitle, twTotalCasesNumber, twTotalCasesNumberNew,
-            twTotalTestsTitle, twTotalTestsNumber, twTotalTestsNumberNew,
-            twTotalDeathsTitle, twTotalDeathsNumber, twTotalDeathsNumberNew,
-            twIntensiveCareTitle, twIntensiveCareNumber, twIntensiveCareNumberNew,
-            twInfectedHospitalizedTitle, twInfectedHospitalizedNumber, twInfectedHospitalizedNumberNew;
-
+    private TextView  twTotalCasesNumber, twTotalCasesNumberNew,
+            twTotalTestsNumber, twTotalTestsNumberNew,
+            twTotalDeathsNumber, twTotalDeathsNumberNew,
+            twIntensiveCareNumber,
+            twInfectedHospitalizedNumber;
 
     private SwipeRefreshLayout swipeRefreshLayout;
-
     private PieChart pieChart;
-
-    private LinearLayout lin_state_data, lin_world_data;
+    private LinearLayout linearLayoutStateData;
 
     private String strTotalCasesNumber, strTotalCasesNumberNew,
-            strTotalTestsTitle, strTotalTestsNumber, strTotalTestsNumberNew,
-            strTotalDeathsTitle, strTotalDeathsNumber, strTotalDeathsNumberNew,
-            strIntensiveCareTitle, strIntensiveCareNumber, strIntensiveCareNumberNew,
-            strInfectedHospitalizedTitle, strInfectedHospitalizedNumber, strInfectedHospitalizedNumberNew;
+            strTotalTestsNumber, strTotalTestsNumberNew,
+            strTotalDeathsNumber, strTotalDeathsNumberNew,
+            strIntensiveCareNumber,
+            strInfectedHospitalizedNumber;
+
     private int int_active_new;
     private ProgressDialog progressDialog;
     private boolean doubleBackToExitPressedOnce = false;
@@ -73,6 +69,13 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
+        linearLayoutStateData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(DashboardActivity.this, "ceva", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
 
@@ -87,12 +90,10 @@ public class DashboardActivity extends AppCompatActivity {
         twInfectedHospitalizedNumber = findViewById(R.id.twInfectedHospitalizedNumber);
         pieChart = findViewById(R.id.activityDashboardPiechart);
         swipeRefreshLayout = findViewById(R.id.activity_dashboard_swipe_refresh_layout);
+        linearLayoutStateData = findViewById(R.id.LinearLayoutStateData);
     }
 
-
-
     private void FetchData() {
-
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         String apiUrl = "https://www.graphs.ro/json.php";
         pieChart.clearChart();
