@@ -243,7 +243,6 @@
 
                 </androidx.cardview.widget.CardView>
 
-
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardTotalDeaths"
                     android:layout_width="0dp"
@@ -296,6 +295,114 @@
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardIntensiveCare"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="8dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/twIntensiveCareTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="25dp"
+                            android:gravity="center"
+                            android:text="Intensive care now"
+                            android:textStyle="bold"
+                            android:textColor="@color/pink"
+                            android:textSize="16sp"/>
+
+                        <TextView
+                            android:id="@+id/twIntensiveCareNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center"
+                            android:text=""
+                            android:textColor="@android:color/black"
+                            android:textSize="24sp"/>
+
+                        <TextView
+                            android:id="@+id/twIntensiveCareNumberNew"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="25dp"
+                            android:gravity="center"
+                            android:text=""
+                            android:textColor="@color/pink"
+                            android:textSize="14sp"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardInfectedHospitalized"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="8dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/twInfectedHospitalizedTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="25dp"
+                            android:gravity="center"
+                            android:text="Infected Hospitalized"
+                            android:textStyle="bold"
+                            android:textColor="@color/pink2"
+                            android:textSize="16sp"/>
+
+                        <TextView
+                            android:id="@+id/twInfectedHospitalizedNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center"
+                            android:text=""
+                            android:textColor="@android:color/black"
+                            android:textSize="24sp"/>
+
+                        <TextView
+                            android:id="@+id/twInfectedHospitalizedNumberNew"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="25dp"
+                            android:gravity="center"
+                            android:text=""
+                            android:textColor="@color/pink2"
+                            android:textSize="14sp"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
 
 
 

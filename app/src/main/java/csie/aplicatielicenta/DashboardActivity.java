@@ -35,8 +35,9 @@ public class DashboardActivity extends AppCompatActivity {
     private TextView twTotalCasesTitle, twTotalCasesNumber, twTotalCasesNumberNew,
             twTotalTestsTitle, twTotalTestsNumber, twTotalTestsNumberNew,
             twTotalDeathsTitle, twTotalDeathsNumber, twTotalDeathsNumberNew,
-            tv_confirmed_new, tv_active, tv_active_new, tv_recovered, tv_recovered_new, tv_death,
-            tv_death_new, tv_tests, tv_tests_new, tv_date, tv_time;
+            twIntensiveCareTitle, twIntensiveCareNumber, twIntensiveCareNumberNew,
+            twInfectedHospitalizedTitle, twInfectedHospitalizedNumber, twInfectedHospitalizedNumberNew;
+
 
     private SwipeRefreshLayout swipeRefreshLayout;
 
@@ -47,8 +48,8 @@ public class DashboardActivity extends AppCompatActivity {
     private String strTotalCasesNumber, strTotalCasesNumberNew,
             strTotalTestsTitle, strTotalTestsNumber, strTotalTestsNumberNew,
             strTotalDeathsTitle, strTotalDeathsNumber, strTotalDeathsNumberNew,
-             str_confirmed_new, str_active, str_active_new, str_recovered, str_recovered_new,
-            str_death, str_death_new, str_tests, str_tests_new, str_last_update_time;
+            strIntensiveCareTitle, strIntensiveCareNumber, strIntensiveCareNumberNew,
+            strInfectedHospitalizedTitle, strInfectedHospitalizedNumber, strInfectedHospitalizedNumberNew;
     private int int_active_new;
     private ProgressDialog progressDialog;
     private boolean doubleBackToExitPressedOnce = false;
@@ -62,21 +63,19 @@ public class DashboardActivity extends AppCompatActivity {
         Init();
         FetchData();
 
-
-
     }
 
 
     private void Init() {
         twTotalCasesNumber = findViewById(R.id.twTotalCasesNumber);
         twTotalCasesNumberNew = findViewById(R.id.twTotalCasesNumberNew);
-
         twTotalTestsNumber = findViewById(R.id.twTotalTestsNumber);
         twTotalTestsNumberNew = findViewById(R.id.twTotalTestsNumberNew);
-
         twTotalDeathsNumber = findViewById(R.id.twTotalDeathsNumber);
         twTotalDeathsNumberNew = findViewById(R.id.twTotalDeathsNumberNew);
 
+        twIntensiveCareNumber = findViewById(R.id.twIntensiveCareNumber);
+        twInfectedHospitalizedNumber = findViewById(R.id.twInfectedHospitalizedNumber);
 
         pieChart = findViewById(R.id.activity_main_piechart);
         swipeRefreshLayout = findViewById(R.id.activity_main_swipe_refresh_layout);
@@ -108,12 +107,12 @@ public class DashboardActivity extends AppCompatActivity {
 
                             strTotalCasesNumber = dataRomania.getString("total_cases");
                             strTotalCasesNumberNew = dataRomania.getString("new_cases_today");
-
                             strTotalTestsNumber = dataRomania.getString("total_tests");
                             strTotalTestsNumberNew = dataRomania.getString("new_tests_today");
-
                             strTotalDeathsNumber = dataRomania.getString("total_deaths");
                             strTotalDeathsNumberNew = dataRomania.getString("new_deaths_today");
+                            strIntensiveCareNumber = dataRomania.getString("intensive_care_right_now");
+                            strInfectedHospitalizedNumber = dataRomania.getString("infected_hospitalized");
 
 
 
@@ -124,12 +123,12 @@ public class DashboardActivity extends AppCompatActivity {
                                 public void run() {
                                     twTotalCasesNumber.setText(NumberFormat.getInstance().format(Integer.parseInt(strTotalCasesNumber)));
                                     twTotalCasesNumberNew.setText("Today: +" + NumberFormat.getInstance().format(Integer.parseInt(strTotalCasesNumberNew)));
-
                                     twTotalTestsNumber.setText(NumberFormat.getInstance().format(Integer.parseInt(strTotalTestsNumber)));
                                     twTotalTestsNumberNew.setText("Today: +" + NumberFormat.getInstance().format(Integer.parseInt(strTotalTestsNumberNew)));
-
                                     twTotalDeathsNumber.setText(NumberFormat.getInstance().format(Integer.parseInt(strTotalDeathsNumber)));
                                     twTotalDeathsNumberNew.setText("Today: +" + NumberFormat.getInstance().format(Integer.parseInt(strTotalDeathsNumberNew)));
+                                    twIntensiveCareNumber.setText(NumberFormat.getInstance().format(Integer.parseInt(strIntensiveCareNumber)));
+                                    twInfectedHospitalizedNumber.setText(NumberFormat.getInstance().format(Integer.parseInt(strInfectedHospitalizedNumber)));
                                 }
                             },  1000);
 
