@@ -1,28 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FirstActivity">
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
+<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--        android:id="@+id/bottom_navigation"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintRight_toLeftOf="parent"-->
+<!--        app:layout_constraintLeft_toRightOf="parent"-->
+<!--        app:menu="@menu/menu"-->
+<!--        android:background="@color/myColor"-->
+<!--        app:itemTextColor="@color/white"-->
+<!--        app:itemIconTint="@color/white"/>-->
+
+<!--    <FrameLayout-->
+<!--        android:id="@+id/fragment_container"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"/>-->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnDashboard"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="parent"
-        app:layout_constraintLeft_toRightOf="parent"
-        app:menu="@menu/menu"
-        android:background="@color/myColor"
-        app:itemTextColor="@color/white"
-        app:itemIconTint="@color/white"/>
+        android:layout_row="0"
+        android:layout_column="0"
+        android:layout_margin="20dp"
+        android:backgroundTint="@color/myColor"
+        android:text="Dashboard" />
 
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"/>
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnSetari"
+        android:text="Setari"
+        android:backgroundTint="@color/myColor"
+        android:layout_margin="20dp"
+        />
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnProfil"
+        android:text="Profil"
+        android:backgroundTint="@color/myColor"
+        android:layout_margin="20dp"
+        />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/ceva"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_row="1"
+        android:layout_column="0"
+        android:layout_margin="20dp"
+        android:backgroundTint="@color/myColor"
+        android:text="ceva" />
+
+
+</GridLayout>

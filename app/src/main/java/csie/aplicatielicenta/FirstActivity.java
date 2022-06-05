@@ -1,47 +1,66 @@
 package csie.aplicatielicenta;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
-import csie.aplicatielicenta.databinding.ActivityFirstBinding;
-import csie.aplicatielicenta.fragments.DashboardFragment;
-import csie.aplicatielicenta.fragments.SettingsFragment;
+import com.google.android.material.button.MaterialButton;
 
 public class FirstActivity extends AppCompatActivity {
 
-    ActivityFirstBinding binding;
+//    ActivityFirstBinding binding;
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        binding = ActivityFirstBinding.inflate((getLayoutInflater()));
+//        setContentView(binding.getRoot());
+//        replaceFragment(new DashboardFragment());
+//
+//        binding.bottomNavigation.setOnItemSelectedListener(item -> {
+//            switch (item.getItemId()){
+//
+//                case R.id.dashboard:
+//                    replaceFragment(new DashboardFragment());
+//                    break;
+//
+//                case R.id.settings:
+//                    replaceFragment(new SettingsFragment());
+//                    break;
+//            }
+//            return true;
+//        });
+//    }
+//
+//    private void replaceFragment(Fragment fragment){
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.fragment_container, fragment);
+//        fragmentTransaction.commit();
+//
+//    }
+
+    MaterialButton btnDashboard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityFirstBinding.inflate((getLayoutInflater()));
-        setContentView(binding.getRoot());
-        replaceFragment(new DashboardFragment());
+        setContentView(R.layout.activity_first);
 
-        binding.bottomNavigation.setOnItemSelectedListener(item -> {
-            switch (item.getItemId()){
+        btnDashboard = findViewById(R.id.btnDashboard);
 
-                case R.id.dashboard:
-                    replaceFragment(new DashboardFragment());
-                    break;
-
-                case R.id.settings:
-                    replaceFragment(new SettingsFragment());
-                    break;
+        btnDashboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), DashboardActivity.class);
+                startActivity(intent);
             }
-            return true;
         });
-    }
 
-    private void replaceFragment(Fragment fragment){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, fragment);
-        fragmentTransaction.commit();
+
 
     }
+
+
 }
