@@ -1,4 +1,4 @@
-package csie.aplicatielicenta;
+package csie.aplicatielicenta.Models;
 
 public class User {
 

@@ -3,6 +3,7 @@ package csie.aplicatielicenta;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -72,7 +73,8 @@ public class DashboardActivity extends AppCompatActivity {
         linearLayoutStateData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(DashboardActivity.this, "ceva", Toast.LENGTH_SHORT).show();
+                Intent countyActivityIntent = new Intent(DashboardActivity.this, CountyDataActivity.class);
+                startActivity(countyActivityIntent);
             }
         });
 
@@ -90,7 +92,7 @@ public class DashboardActivity extends AppCompatActivity {
         twInfectedHospitalizedNumber = findViewById(R.id.twInfectedHospitalizedNumber);
         pieChart = findViewById(R.id.activityDashboardPiechart);
         swipeRefreshLayout = findViewById(R.id.activity_dashboard_swipe_refresh_layout);
-        linearLayoutStateData = findViewById(R.id.LinearLayoutStateData);
+        linearLayoutStateData = findViewById(R.id.linearLayoutCountyData);
     }
 
     private void FetchData() {

@@ -432,7 +432,7 @@
                     app:cardElevation="4dp">
 
                     <LinearLayout
-                        android:id="@+id/LinearLayoutStateData"
+                        android:id="@+id/linearLayoutCountyData"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:clickable="true"
@@ -449,7 +449,7 @@
                             android:layout_marginTop="5dp"
                             android:textStyle="bold"
                             android:gravity="center"
-                            android:text="State Data"
+                            android:text="County Data"
                             android:textColor="@color/teal_700"
                             android:textSize="16sp"/>
 
