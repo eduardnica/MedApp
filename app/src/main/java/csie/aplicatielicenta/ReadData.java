@@ -24,6 +24,7 @@ public class ReadData extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_read_data);
         binding = ActivityReadDataBinding .inflate(getLayoutInflater());
         binding.readdataBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +59,7 @@ public class ReadData extends AppCompatActivity {
                         DataSnapshot dataSnapshot = task.getResult();
                         String firstName = String.valueOf(dataSnapshot.child("firstName").getValue());
                         String lastName = String.valueOf(dataSnapshot.child("lastName").getValue());
-                        String age = String.valueOf(dataSnapshot.child("age").getValue());
+                        String age = String.valueOf(dataSnapshot.child("email").getValue());
                         binding.tvFirstName.setText(firstName);
                         binding.tvLastName.setText(lastName);
                         binding.tvAge.setText(age);

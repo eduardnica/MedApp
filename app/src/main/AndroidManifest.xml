@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AplicatieLicenta">
         <activity
+            android:name=".ConsultationActivity"
+            android:exported="false" />
+        <activity
             android:name=".CountyDataActivity"
             android:exported="false" />
         <activity
