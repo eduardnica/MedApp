@@ -2,4 +2,38 @@
     <string name="app_name">Licenta</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="city">
+        <item>Choose City</item>
+        <item>Bucuresti</item>
+        <item>Cluj</item>
+    </string-array>
+
+    <string-array name="hospitalsBucharest">
+        <item>Choose Hospital</item>
+        <item>Spitalul Clinic de Urgență pentru Copii „Grigore Alexandrescu”</item>
+        <item>Spitalul Clinic de Urgență București</item>
+        <item>Spitalul Clinic de Urgență „Sfântul Pantelimon”</item>
+        <item>Spitalul Clinic de Urgență „Sfântul Ioan” București</item>
+        <item>Spitalul Clinic de Urgență „Bagdasar-Arseni”</item>
+        <item>Institutul Clinic Fundeni</item>
+
+    </string-array>
+
+    <string-array name="hospitalsCluj">
+        <item>Choose Hospital</item>
+        <item>Spitalul Clinic Municipal Cluj-Napoca</item>
+        <item>Spitalul Clinic Județean de Urgență Cluj</item>
+        <item>Spitalul Clinic de Recuperare</item>
+
+    </string-array>
+
+    <string-array name="specialization">
+        <item>Choose Specialization</item>
+        <item>ORL</item>
+        <item>Medicina generala</item>
+        <item>Medicina interna</item>
+
+    </string-array>
+
+
 </resources>

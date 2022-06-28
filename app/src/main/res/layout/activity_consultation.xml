@@ -1,9 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ConsultationActivity">
+    tools:context=".RegisterActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/twConsultation"
+        android:text="Consultation Request"
+        android:textColor="@color/black"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:layout_margin="40dp"
+        android:gravity="center"/>
+
+
+    <Spinner
+        android:id="@+id/spinnerCity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/twConsultation"
+        android:layout_margin="30dp"
+        android:gravity="center" />
+
+    <Spinner
+        android:id="@+id/spinnerHospital"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:layout_below="@+id/spinnerCity"
+        android:gravity="center" />
+
+    <Spinner
+        android:id="@+id/spinnerSpecialization"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:layout_below="@+id/spinnerHospital"
+        android:gravity="center" />
+
+    <EditText
+        android:id="@+id/editTextDateTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinnerSpecialization"
+        android:gravity="center"
+        android:layout_margin="30dp"
+        android:hint="Select Date and Time"
+        android:focusableInTouchMode="true"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:inputType="none"/>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnRequest"
+        android:layout_below="@id/editTextDateTime"
+        android:text="Request"
+        android:backgroundTint="@color/myColor"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="30dp"
+        />
+
+
+
+</RelativeLayout>
