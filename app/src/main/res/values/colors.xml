@@ -7,7 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="myColor">#0678AC</color>
+    <color name="myColor">#7094fc</color>
 
     <color name="pieChart1">#ffa600</color>
     <color name="pieChart2">#7a5195</color>
@@ -27,4 +27,6 @@
     <color name="green_pie">#08a045</color>
     <color name="gray">#c4c4c4</color>
     <color name="bg">#EEEEEE</color>
+
+
 </resources>
