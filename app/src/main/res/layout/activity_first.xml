@@ -24,16 +24,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnConsultation"
-        android:text="Consultation"
-
+        android:text="Request a Consultation"
         android:backgroundTint="@color/myColor"
         android:layout_margin="30dp"
         />
     <com.google.android.material.button.MaterialButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/btnProfil"
-        android:text="Profil"
+        android:id="@+id/btnMyConsultations"
+        android:text="My Consultations"
         android:backgroundTint="@color/myColor"
         android:layout_margin="30dp"
         />
