@@ -3,19 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/consultation_background"
     android:layout_height="match_parent"
     tools:context=".RegisterActivity">
+
+    <ImageView
+        android:id="@+id/imageConsultation"
+        android:layout_width="203dp"
+        android:layout_height="176dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="110dp"
+        android:src="@drawable/consultation_bk" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/twConsultation"
+        android:layout_below="@id/imageConsultation"
         android:text="Consultation Request"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="30dp"
         android:textStyle="bold"
-        android:layout_margin="40dp"
+        android:layout_margin="30dp"
         android:gravity="center"/>
+
 
 
     <Spinner
@@ -23,14 +34,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/twConsultation"
-        android:layout_margin="30dp"
+        android:layout_margin="20dp"
         android:gravity="center" />
 
     <Spinner
         android:id="@+id/spinnerHospital"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="30dp"
+        android:layout_margin="20dp"
         android:layout_below="@+id/spinnerCity"
         android:gravity="center" />
 
@@ -38,7 +49,7 @@
         android:id="@+id/spinnerSpecialization"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="30dp"
+        android:layout_margin="20dp"
         android:layout_below="@+id/spinnerHospital"
         android:gravity="center" />
 
@@ -47,8 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/spinnerSpecialization"
-        android:gravity="center"
-        android:layout_margin="30dp"
+        android:layout_margin="20dp"
         android:hint="Select Date and Time"
         android:focusableInTouchMode="true"
         android:cursorVisible="false"
