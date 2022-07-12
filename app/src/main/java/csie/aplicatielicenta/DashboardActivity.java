@@ -126,21 +126,16 @@ public class DashboardActivity extends AppCompatActivity {
                                     pieChart.addPieSlice(new PieModel("Intensive Care", Integer.parseInt(strIntensiveCareNumber), Color.parseColor("#ef5675")));
                                     pieChart.addPieSlice(new PieModel("Deceased", Integer.parseInt(strTotalDeathsNumberNew), Color.parseColor("#003f5c")));
                                     pieChart.startAnimation();
-
                                 }
                             },  1000);
-
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
                     }
                 }
         );

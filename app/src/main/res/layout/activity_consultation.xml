@@ -66,11 +66,20 @@
         android:inputType="none"/>
 
 
+    <Spinner
+        android:id="@+id/spinnerTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_below="@+id/editTextDateTime"
+        android:gravity="center" />
+
+
     <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btnRequest"
-        android:layout_below="@id/editTextDateTime"
+        android:layout_below="@id/spinnerTime"
         android:text="Request"
         android:backgroundTint="@color/myColor"
         android:layout_centerHorizontal="true"
