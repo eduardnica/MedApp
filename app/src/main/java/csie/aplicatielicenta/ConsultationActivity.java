@@ -45,7 +45,6 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
     DatabaseReference consultationDetails = FirebaseDatabase.getInstance().getReference().child("Consultation").child(uid);
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
