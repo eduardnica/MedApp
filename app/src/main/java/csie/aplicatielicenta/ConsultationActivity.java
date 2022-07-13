@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.contentcapture.DataShareRequest;
 import android.widget.AdapterView;
@@ -33,10 +36,10 @@ import java.util.Calendar;
 import csie.aplicatielicenta.Models.Consultation;
 
 public class ConsultationActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    Spinner spinnerCity, spinnerHospital, spinnerSpecialization, spinnerTime;
-    ArrayAdapter<CharSequence> adapterCity, adapterHospitalsBucharest,adapterHospitalsCluj, adapterSpecialization, adapterTime;
+    Spinner spinnerCity, spinnerHospital, spinnerSpecialization;
+    ArrayAdapter<CharSequence> adapterCity, adapterHospitalsBucharest,adapterHospitalsCluj, adapterSpecialization;
     EditText editTextDate, editTextTime;
-    MaterialButton btnRequest, btnHour8, btnHour9;
+    MaterialButton btnRequest, btnHour8, btnHour9,btnHour10, btnHour11, btnHour8_, btnHour9_, btnHour10_, btnHour11_;
     GridLayout gridLayoutHours;
 
     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -54,26 +57,35 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
         spinnerSpecialization = findViewById(R.id.spinnerSpecialization);
         editTextDate = findViewById(R.id.editTextDate);
         editTextTime = findViewById(R.id.editTextTime);
-        //spinnerTime = findViewById(R.id.spinnerTime);
+
         gridLayoutHours = findViewById(R.id.gridLayoutHours);
         btnHour8 = findViewById(R.id.btnHour8);
         btnHour9 = findViewById(R.id.btnHour9);
+        btnHour10 = findViewById(R.id.btnHour10);
+        btnHour11 = findViewById(R.id.btnHour11);
+        btnHour8_ = findViewById(R.id.btnHour8_);
+        btnHour9_ = findViewById(R.id.btnHour9_);
+        btnHour10_ = findViewById(R.id.btnHour10_);
+        btnHour11_ = findViewById(R.id.btnHour11_);
         btnRequest = findViewById(R.id.btnRequest);
 
         adapterCity = ArrayAdapter.createFromResource(this, R.array.city, android.R.layout.simple_spinner_item);
         adapterHospitalsBucharest = ArrayAdapter.createFromResource(this, R.array.hospitalsBucharest, android.R.layout.simple_spinner_item);
         adapterHospitalsCluj = ArrayAdapter.createFromResource(this, R.array.hospitalsCluj, android.R.layout.simple_spinner_item);
         adapterSpecialization = ArrayAdapter.createFromResource(this, R.array.specialization, android.R.layout.simple_spinner_item);
-        //adapterTime = ArrayAdapter.createFromResource(this, R.array.time, android.R.layout.simple_spinner_item);
 
         adapterCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapterHospitalsBucharest.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapterHospitalsCluj.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapterSpecialization.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //adapterTime.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinnerCity.setAdapter(adapterCity);
         spinnerCity.setOnItemSelectedListener(this);
+
+        editTextDate.setVisibility(View.INVISIBLE);
+        editTextTime.setVisibility(View.INVISIBLE);
+        gridLayoutHours.setVisibility(View.INVISIBLE);
+        btnRequest.setVisibility(View.INVISIBLE);
 
         editTextDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,25 +93,101 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
                 showDateTimeDialog(editTextDate);
             }
         });
-        editTextDate.setVisibility(View.INVISIBLE);
-        editTextTime.setVisibility(View.INVISIBLE);
-        gridLayoutHours.setVisibility(View.INVISIBLE);
-        btnRequest.setVisibility(View.INVISIBLE);
 
+        editTextDate.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                FirebaseDatabase.getInstance().getReference().child("Occupied_Dates").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.child(editTextDate.getText().toString() + " " + btnHour8.getText().toString()).exists()){
+                            btnHour8.setBackgroundColor(getResources().getColor(R.color.gray));
+                            btnHour8.setEnabled(false);
+                        }else {
+                            btnHour8.setBackgroundColor(getResources().getColor(R.color.myColor));
+                            btnHour8.setEnabled(true);
+                        }
 
+                        if(snapshot.child(editTextDate.getText().toString() + " " + btnHour9.getText().toString()).exists()){
+                            btnHour9.setBackgroundColor(getResources().getColor(R.color.gray));
+                            btnHour9.setEnabled(false);
+                        }else {
+                            btnHour9.setBackgroundColor(getResources().getColor(R.color.myColor));
+                            btnHour9.setEnabled(true);
+                        }
 
+                        if(snapshot.child(editTextDate.getText().toString() + " " + btnHour10.getText().toString()).exists()){
+                            btnHour10.setBackgroundColor(getResources().getColor(R.color.gray));
+                            btnHour10.setEnabled(false);
+                        }else {
+                            btnHour10.setBackgroundColor(getResources().getColor(R.color.myColor));
+                            btnHour10.setEnabled(true);
+                        }
 
+                        if(snapshot.child(editTextDate.getText().toString() + " " + btnHour11.getText().toString()).exists()){
+                            btnHour11.setBackgroundColor(getResources().getColor(R.color.gray));
+                            btnHour11.setEnabled(false);
+                        }else {
+                            btnHour11.setBackgroundColor(getResources().getColor(R.color.myColor));
+                            btnHour11.setEnabled(true);
+                        }
 
-        ////////////////////////
+                        if(snapshot.child(editTextDate.getText().toString() + " " + btnHour8_.getText().toString()).exists()){
+                            btnHour8_.setBackgroundColor(getResources().getColor(R.color.gray));
+                            btnHour8_.setEnabled(false);
+                        }else {
+                            btnHour8_.setBackgroundColor(getResources().getColor(R.color.myColor));
+                            btnHour8_.setEnabled(true);
+                        }
 
+                        if(snapshot.child(editTextDate.getText().toString() + " " + btnHour9_.getText().toString()).exists()){
+                            btnHour9_.setBackgroundColor(getResources().getColor(R.color.gray));
+                            btnHour9_.setEnabled(false);
+                        }else {
+                            btnHour9_.setBackgroundColor(getResources().getColor(R.color.myColor));
+                            btnHour9_.setEnabled(true);
+                        }
 
+                        if(snapshot.child(editTextDate.getText().toString() + " " + btnHour10_.getText().toString()).exists()){
+                            btnHour10_.setBackgroundColor(getResources().getColor(R.color.gray));
+                            btnHour10_.setEnabled(false);
+                        }else {
+                            btnHour10_.setBackgroundColor(getResources().getColor(R.color.myColor));
+                            btnHour10_.setEnabled(true);
+                        }
+
+                        if(snapshot.child(editTextDate.getText().toString() + " " + btnHour11_.getText().toString()).exists()){
+                            btnHour11_.setBackgroundColor(getResources().getColor(R.color.gray));
+                            btnHour11_.setEnabled(false);
+                        }else {
+                            btnHour11_.setBackgroundColor(getResources().getColor(R.color.myColor));
+                            btnHour11_.setEnabled(true);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) { }
+                });
+            }
+        });
 
         btnHour8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    btnHour8.setBackgroundColor(getResources().getColor(R.color.yellow));
-                    btnHour9.setBackgroundColor(getResources().getColor(R.color.myColor));
-                    editTextTime.setText(btnHour8.getText().toString());
+                btnHour8.setBackgroundColor(getResources().getColor(R.color.yellow));
+                if(btnHour9.isEnabled()){ btnHour9.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour10.isEnabled()){ btnHour10.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour11.isEnabled()){ btnHour11.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour8_.isEnabled()){ btnHour8_.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour9_.isEnabled()){ btnHour9_.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour10_.isEnabled()){ btnHour10_.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour11_.isEnabled()){ btnHour11_.setBackgroundColor(getResources().getColor(R.color.myColor));}
+
+                editTextTime.setText(btnHour8.getText().toString());
 
             }
         });
@@ -107,45 +195,144 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
         btnHour9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btnHour8.setBackgroundColor(getResources().getColor(R.color.myColor));
+                if(btnHour8.isEnabled()){ btnHour8.setBackgroundColor(getResources().getColor(R.color.myColor));}
                 btnHour9.setBackgroundColor(getResources().getColor(R.color.yellow));
+                if(btnHour10.isEnabled()){ btnHour10.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour11.isEnabled()){ btnHour11.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour8_.isEnabled()){ btnHour8_.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour9_.isEnabled()){ btnHour9_.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour10_.isEnabled()){ btnHour10_.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour11_.isEnabled()){ btnHour11_.setBackgroundColor(getResources().getColor(R.color.myColor));}
                 editTextTime.setText(btnHour9.getText().toString());
             }
         });
 
-        //////////////////
+        btnHour10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(btnHour8.isEnabled()){ btnHour8.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour9.isEnabled()){ btnHour9.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                btnHour10.setBackgroundColor(getResources().getColor(R.color.yellow));
+                if(btnHour11.isEnabled()){ btnHour11.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour8_.isEnabled()){ btnHour8_.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour9_.isEnabled()){ btnHour9_.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour10_.isEnabled()){ btnHour10_.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour11_.isEnabled()){ btnHour11_.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                editTextTime.setText(btnHour10.getText().toString());
+            }
+        });
+
+        btnHour11.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(btnHour8.isEnabled()){ btnHour8.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour9.isEnabled()){ btnHour9.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour10.isEnabled()){ btnHour10.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                btnHour11.setBackgroundColor(getResources().getColor(R.color.yellow));
+                if(btnHour8_.isEnabled()){ btnHour8_.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour9_.isEnabled()){ btnHour9_.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour10_.isEnabled()){ btnHour10_.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour11_.isEnabled()){ btnHour11_.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                editTextTime.setText(btnHour11.getText().toString());
+            }
+        });
+
+        btnHour8_.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(btnHour8.isEnabled()){ btnHour8.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour9.isEnabled()){ btnHour9.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour10.isEnabled()){ btnHour10.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour11.isEnabled()){ btnHour11.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                btnHour8_.setBackgroundColor(getResources().getColor(R.color.yellow));
+                if(btnHour9_.isEnabled()){ btnHour9_.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour10_.isEnabled()){ btnHour10_.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour11_.isEnabled()){ btnHour11_.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                editTextTime.setText(btnHour8_.getText().toString());
+            }
+        });
+
+        btnHour9_.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(btnHour8.isEnabled()){ btnHour8.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour9.isEnabled()){ btnHour9.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour10.isEnabled()){ btnHour10.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour11.isEnabled()){ btnHour11.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour8_.isEnabled()){ btnHour8_.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                btnHour9_.setBackgroundColor(getResources().getColor(R.color.yellow));
+                if(btnHour10_.isEnabled()){ btnHour10_.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour11_.isEnabled()){ btnHour11_.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                editTextTime.setText(btnHour9_.getText().toString());
+            }
+        });
+
+        btnHour10_.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(btnHour8.isEnabled()){ btnHour8.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour9.isEnabled()){ btnHour9.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour10.isEnabled()){ btnHour10.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour11.isEnabled()){ btnHour11.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour8_.isEnabled()){ btnHour8_.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour9_.isEnabled()){ btnHour9_.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                btnHour10_.setBackgroundColor(getResources().getColor(R.color.yellow));
+                if(btnHour11_.isEnabled()){ btnHour11_.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                editTextTime.setText(btnHour10_.getText().toString());
+            }
+        });
+
+        btnHour11_.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(btnHour8.isEnabled()){ btnHour8.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour9.isEnabled()){ btnHour9.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour10.isEnabled()){ btnHour10.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour11.isEnabled()){ btnHour11.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour8_.isEnabled()){ btnHour8_.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour9_.isEnabled()){ btnHour9_.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                if(btnHour10_.isEnabled()){ btnHour10_.setBackgroundColor(getResources().getColor(R.color.myColor));}
+                btnHour11_.setBackgroundColor(getResources().getColor(R.color.yellow));
+                editTextTime.setText(btnHour11_.getText().toString());
+            }
+        });
+
+
+
+
 
 
 
 
 
         btnRequest.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
-                String  city, hospital, specialization,dateAndTime;
+                String  city, hospital, specialization, date, time, dateAndTime;
                 city = spinnerCity.getSelectedItem().toString();
                 hospital = spinnerHospital.getSelectedItem().toString();
                 specialization = spinnerSpecialization.getSelectedItem().toString();
-                dateAndTime = editTextDate.getText().toString() + " " + editTextTime.getText().toString();
+                date = editTextDate.getText().toString();
+                time = editTextTime.getText().toString();
+                dateAndTime = date + " " + time;
 
-
-                FirebaseDatabase.getInstance().getReference().child("Occupied_Dates").child(editTextDate.getText().toString() + " " + editTextTime.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.exists()){
-                            Toast.makeText(ConsultationActivity.this, "Reservation already exists!", Toast.LENGTH_LONG).show();
-                        } else {
-                            addConsultation(city, hospital, specialization, dateAndTime);
+                if(date.isEmpty() || time.isEmpty()){
+                    Toast.makeText(ConsultationActivity.this, "Please choose a date and time!", Toast.LENGTH_LONG).show();
+                } else {
+                    FirebaseDatabase.getInstance().getReference().child("Occupied_Dates").child(editTextDate.getText().toString() + " " + editTextTime.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.exists()){
+                                Toast.makeText(ConsultationActivity.this, "Reservation already exists!", Toast.LENGTH_LONG).show();
+                            } else {
+                                addConsultation(city, hospital, specialization, dateAndTime);
+                            }
                         }
-
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+                }
             }
         });
 
@@ -177,7 +364,6 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
                         editTextTime.setVisibility(View.INVISIBLE);
                         gridLayoutHours.setVisibility(View.INVISIBLE);
                         btnRequest.setVisibility(View.INVISIBLE);
-                        //spinnerTime.setAdapter(null);
                     }else {
                         spinnerSpecialization.setAdapter(adapterSpecialization);
                         spinnerSpecialization.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -196,7 +382,6 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
                                     btnRequest.setVisibility(View.VISIBLE);
 
 
-                                    
 
 
 
@@ -204,18 +389,9 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
 
 
 
-//                                    spinnerTime.setAdapter(adapterTime);
-//                                    spinnerTime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//                                        @Override
-//                                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//
-//                                        }
-//
-//                                        @Override
-//                                        public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//                                        }
-//                                    });
+
+
+
                                 }
                             }
 
@@ -230,8 +406,13 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
                 public void onNothingSelected(AdapterView<?> adapterView) { }
             });
 
-            String text = parent.getItemAtPosition(position).toString();
-            Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
+
+
+
+
+
+
+
 
 
 
@@ -299,29 +480,16 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
 
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd");
                 editTextDate.setText((simpleDateFormat.format(calendar.getTime())));
-
-//                TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
-//                    @Override
-//                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-//                        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-//                        calendar.set(Calendar.MINUTE, minute);
-//
-//                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd HH:mm");
-//                        editTextDateTime.setText((simpleDateFormat.format(calendar.getTime())));
-//                    }
-//                };
-//
-//                new TimePickerDialog(ConsultationActivity.this, timeSetListener, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false).show();
             }
         };
-
         new DatePickerDialog(ConsultationActivity.this,dateSetListener, calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
 
+
+
     public void addConsultation( String city, String hospital, String specialization, String dateAndTime){
         Consultation consultation = new Consultation(city, hospital, specialization, dateAndTime);
-
         FirebaseDatabase.getInstance().getReference("Occupied_Dates").child(dateAndTime).setValue("True");
         FirebaseDatabase.getInstance().getReference("Consultations")
                 .child(uid)
@@ -336,33 +504,6 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
                     Toast.makeText(ConsultationActivity.this, "Consultation has not been created!", Toast.LENGTH_LONG).show();
                 }
             }});
-
-
-
-//        consultationDetails.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if(snapshot.hasChild(dateAndTime)){
-//
-//                } else {
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-
-
-
-
-
-
-
-
-
 
     }
 
