@@ -94,86 +94,8 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
             }
         });
 
-        editTextDate.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-            @Override
-            public void afterTextChanged(Editable editable) {
-                FirebaseDatabase.getInstance().getReference().child("Occupied_Dates").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.child(editTextDate.getText().toString() + " " + btnHour8.getText().toString()).exists()){
-                            btnHour8.setBackgroundColor(getResources().getColor(R.color.gray));
-                            btnHour8.setEnabled(false);
-                        }else {
-                            btnHour8.setBackgroundColor(getResources().getColor(R.color.myColor));
-                            btnHour8.setEnabled(true);
-                        }
+        checkAvailability(editTextDate);
 
-                        if(snapshot.child(editTextDate.getText().toString() + " " + btnHour9.getText().toString()).exists()){
-                            btnHour9.setBackgroundColor(getResources().getColor(R.color.gray));
-                            btnHour9.setEnabled(false);
-                        }else {
-                            btnHour9.setBackgroundColor(getResources().getColor(R.color.myColor));
-                            btnHour9.setEnabled(true);
-                        }
-
-                        if(snapshot.child(editTextDate.getText().toString() + " " + btnHour10.getText().toString()).exists()){
-                            btnHour10.setBackgroundColor(getResources().getColor(R.color.gray));
-                            btnHour10.setEnabled(false);
-                        }else {
-                            btnHour10.setBackgroundColor(getResources().getColor(R.color.myColor));
-                            btnHour10.setEnabled(true);
-                        }
-
-                        if(snapshot.child(editTextDate.getText().toString() + " " + btnHour11.getText().toString()).exists()){
-                            btnHour11.setBackgroundColor(getResources().getColor(R.color.gray));
-                            btnHour11.setEnabled(false);
-                        }else {
-                            btnHour11.setBackgroundColor(getResources().getColor(R.color.myColor));
-                            btnHour11.setEnabled(true);
-                        }
-
-                        if(snapshot.child(editTextDate.getText().toString() + " " + btnHour8_.getText().toString()).exists()){
-                            btnHour8_.setBackgroundColor(getResources().getColor(R.color.gray));
-                            btnHour8_.setEnabled(false);
-                        }else {
-                            btnHour8_.setBackgroundColor(getResources().getColor(R.color.myColor));
-                            btnHour8_.setEnabled(true);
-                        }
-
-                        if(snapshot.child(editTextDate.getText().toString() + " " + btnHour9_.getText().toString()).exists()){
-                            btnHour9_.setBackgroundColor(getResources().getColor(R.color.gray));
-                            btnHour9_.setEnabled(false);
-                        }else {
-                            btnHour9_.setBackgroundColor(getResources().getColor(R.color.myColor));
-                            btnHour9_.setEnabled(true);
-                        }
-
-                        if(snapshot.child(editTextDate.getText().toString() + " " + btnHour10_.getText().toString()).exists()){
-                            btnHour10_.setBackgroundColor(getResources().getColor(R.color.gray));
-                            btnHour10_.setEnabled(false);
-                        }else {
-                            btnHour10_.setBackgroundColor(getResources().getColor(R.color.myColor));
-                            btnHour10_.setEnabled(true);
-                        }
-
-                        if(snapshot.child(editTextDate.getText().toString() + " " + btnHour11_.getText().toString()).exists()){
-                            btnHour11_.setBackgroundColor(getResources().getColor(R.color.gray));
-                            btnHour11_.setEnabled(false);
-                        }else {
-                            btnHour11_.setBackgroundColor(getResources().getColor(R.color.myColor));
-                            btnHour11_.setEnabled(true);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) { }
-                });
-            }
-        });
 
         btnHour8.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -313,7 +235,7 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
                 if(date.isEmpty() || time.isEmpty()){
                     Toast.makeText(ConsultationActivity.this, "Please choose a date and time!", Toast.LENGTH_LONG).show();
                 } else {
-                    FirebaseDatabase.getInstance().getReference().child("Occupied_Dates").child(editTextDate.getText().toString() + " " + editTextTime.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    FirebaseDatabase.getInstance().getReference().child("Occupied_Dates").child(spinnerSpecialization.getSelectedItem().toString()).child(editTextDate.getText().toString() + " " + editTextTime.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if(snapshot.exists()){
@@ -363,6 +285,8 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
                         spinnerSpecialization.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
+
+                                editTextDate.getText().clear();
                                 if(parent.getItemAtPosition(position).equals("Choose Specialization")){
                                     editTextDate.setVisibility(View.INVISIBLE);
                                     editTextTime.setVisibility(View.INVISIBLE);
@@ -374,6 +298,7 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
                                     editTextTime.setVisibility(View.VISIBLE);
                                     gridLayoutHours.setVisibility(View.VISIBLE);
                                     btnRequest.setVisibility(View.VISIBLE);
+                                    checkAvailability(editTextDate);
 
 
 
@@ -496,7 +421,7 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
 
     public void addConsultation( String city, String hospital, String specialization, String dateAndTime){
         Consultation consultation = new Consultation(city, hospital, specialization, dateAndTime);
-        FirebaseDatabase.getInstance().getReference("Occupied_Dates").child(dateAndTime).setValue("True");
+        FirebaseDatabase.getInstance().getReference("Occupied_Dates").child(specialization).child(dateAndTime).setValue("True");
         FirebaseDatabase.getInstance().getReference("Consultations")
                 .child(uid)
                 .child((dateAndTime))
@@ -511,6 +436,89 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
                 }
             }});
 
+    }
+
+    public void checkAvailability(EditText editTextDate){
+        editTextDate.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                FirebaseDatabase.getInstance().getReference().child("Occupied_Dates").child(spinnerSpecialization.getSelectedItem().toString()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.child(editTextDate.getText().toString() + " " + btnHour8.getText().toString()).exists()){
+                            btnHour8.setBackgroundColor(getResources().getColor(R.color.gray));
+                            btnHour8.setEnabled(false);
+                        }else {
+                            btnHour8.setBackgroundColor(getResources().getColor(R.color.myColor));
+                            btnHour8.setEnabled(true);
+                        }
+
+                        if(snapshot.child(editTextDate.getText().toString() + " " + btnHour9.getText().toString()).exists()){
+                            btnHour9.setBackgroundColor(getResources().getColor(R.color.gray));
+                            btnHour9.setEnabled(false);
+                        }else {
+                            btnHour9.setBackgroundColor(getResources().getColor(R.color.myColor));
+                            btnHour9.setEnabled(true);
+                        }
+
+                        if(snapshot.child(editTextDate.getText().toString() + " " + btnHour10.getText().toString()).exists()){
+                            btnHour10.setBackgroundColor(getResources().getColor(R.color.gray));
+                            btnHour10.setEnabled(false);
+                        }else {
+                            btnHour10.setBackgroundColor(getResources().getColor(R.color.myColor));
+                            btnHour10.setEnabled(true);
+                        }
+
+                        if(snapshot.child(editTextDate.getText().toString() + " " + btnHour11.getText().toString()).exists()){
+                            btnHour11.setBackgroundColor(getResources().getColor(R.color.gray));
+                            btnHour11.setEnabled(false);
+                        }else {
+                            btnHour11.setBackgroundColor(getResources().getColor(R.color.myColor));
+                            btnHour11.setEnabled(true);
+                        }
+
+                        if(snapshot.child(editTextDate.getText().toString() + " " + btnHour8_.getText().toString()).exists()){
+                            btnHour8_.setBackgroundColor(getResources().getColor(R.color.gray));
+                            btnHour8_.setEnabled(false);
+                        }else {
+                            btnHour8_.setBackgroundColor(getResources().getColor(R.color.myColor));
+                            btnHour8_.setEnabled(true);
+                        }
+
+                        if(snapshot.child(editTextDate.getText().toString() + " " + btnHour9_.getText().toString()).exists()){
+                            btnHour9_.setBackgroundColor(getResources().getColor(R.color.gray));
+                            btnHour9_.setEnabled(false);
+                        }else {
+                            btnHour9_.setBackgroundColor(getResources().getColor(R.color.myColor));
+                            btnHour9_.setEnabled(true);
+                        }
+
+                        if(snapshot.child(editTextDate.getText().toString() + " " + btnHour10_.getText().toString()).exists()){
+                            btnHour10_.setBackgroundColor(getResources().getColor(R.color.gray));
+                            btnHour10_.setEnabled(false);
+                        }else {
+                            btnHour10_.setBackgroundColor(getResources().getColor(R.color.myColor));
+                            btnHour10_.setEnabled(true);
+                        }
+
+                        if(snapshot.child(editTextDate.getText().toString() + " " + btnHour11_.getText().toString()).exists()){
+                            btnHour11_.setBackgroundColor(getResources().getColor(R.color.gray));
+                            btnHour11_.setEnabled(false);
+                        }else {
+                            btnHour11_.setBackgroundColor(getResources().getColor(R.color.myColor));
+                            btnHour11_.setEnabled(true);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) { }
+                });
+            }
+        });
     }
 
 
