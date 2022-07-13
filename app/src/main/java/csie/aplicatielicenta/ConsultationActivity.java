@@ -1,18 +1,18 @@
 package csie.aplicatielicenta;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
+import android.view.contentcapture.DataShareRequest;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -29,16 +29,15 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Objects;
 
 import csie.aplicatielicenta.Models.Consultation;
-import csie.aplicatielicenta.Models.User;
 
 public class ConsultationActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     Spinner spinnerCity, spinnerHospital, spinnerSpecialization, spinnerTime;
     ArrayAdapter<CharSequence> adapterCity, adapterHospitalsBucharest,adapterHospitalsCluj, adapterSpecialization, adapterTime;
-    EditText editTextDateTime;
-    MaterialButton btnRequest;
+    EditText editTextDate, editTextTime;
+    MaterialButton btnRequest, btnHour8, btnHour9;
+    GridLayout gridLayoutHours;
 
     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     DatabaseReference userDetails = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
@@ -53,57 +52,100 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
         spinnerCity = findViewById(R.id.spinnerCity);
         spinnerHospital = findViewById(R.id.spinnerHospital);
         spinnerSpecialization = findViewById(R.id.spinnerSpecialization);
-        editTextDateTime = findViewById(R.id.editTextDateTime);
-        spinnerTime = findViewById(R.id.spinnerTime);
+        editTextDate = findViewById(R.id.editTextDate);
+        editTextTime = findViewById(R.id.editTextTime);
+        //spinnerTime = findViewById(R.id.spinnerTime);
+        gridLayoutHours = findViewById(R.id.gridLayoutHours);
+        btnHour8 = findViewById(R.id.btnHour8);
+        btnHour9 = findViewById(R.id.btnHour9);
         btnRequest = findViewById(R.id.btnRequest);
 
         adapterCity = ArrayAdapter.createFromResource(this, R.array.city, android.R.layout.simple_spinner_item);
         adapterHospitalsBucharest = ArrayAdapter.createFromResource(this, R.array.hospitalsBucharest, android.R.layout.simple_spinner_item);
         adapterHospitalsCluj = ArrayAdapter.createFromResource(this, R.array.hospitalsCluj, android.R.layout.simple_spinner_item);
         adapterSpecialization = ArrayAdapter.createFromResource(this, R.array.specialization, android.R.layout.simple_spinner_item);
-        adapterTime = ArrayAdapter.createFromResource(this, R.array.time, android.R.layout.simple_spinner_item);
+        //adapterTime = ArrayAdapter.createFromResource(this, R.array.time, android.R.layout.simple_spinner_item);
 
         adapterCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapterHospitalsBucharest.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapterHospitalsCluj.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapterSpecialization.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapterTime.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //adapterTime.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinnerCity.setAdapter(adapterCity);
         spinnerCity.setOnItemSelectedListener(this);
 
-        editTextDateTime.setOnClickListener(new View.OnClickListener() {
+        editTextDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDateTimeDialog(editTextDateTime);
+                showDateTimeDialog(editTextDate);
             }
         });
-        editTextDateTime.setVisibility(View.INVISIBLE);
+        editTextDate.setVisibility(View.INVISIBLE);
+        editTextTime.setVisibility(View.INVISIBLE);
+        gridLayoutHours.setVisibility(View.INVISIBLE);
+        btnRequest.setVisibility(View.INVISIBLE);
+
+
+
+
+
+        ////////////////////////
+
+
+
+        btnHour8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    btnHour8.setBackgroundColor(getResources().getColor(R.color.yellow));
+                    btnHour9.setBackgroundColor(getResources().getColor(R.color.myColor));
+                    editTextTime.setText(btnHour8.getText().toString());
+
+            }
+        });
+
+        btnHour9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnHour8.setBackgroundColor(getResources().getColor(R.color.myColor));
+                btnHour9.setBackgroundColor(getResources().getColor(R.color.yellow));
+                editTextTime.setText(btnHour9.getText().toString());
+            }
+        });
+
+        //////////////////
+
 
 
 
 
         btnRequest.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
-                userDetails.addValueEventListener(new ValueEventListener() {
+                String  city, hospital, specialization,dateAndTime;
+                city = spinnerCity.getSelectedItem().toString();
+                hospital = spinnerHospital.getSelectedItem().toString();
+                specialization = spinnerSpecialization.getSelectedItem().toString();
+                dateAndTime = editTextDate.getText().toString() + " " + editTextTime.getText().toString();
+
+
+                FirebaseDatabase.getInstance().getReference().child("Occupied_Dates").child(editTextDate.getText().toString() + " " + editTextTime.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        String patientFirstName = (String) snapshot.child("firstName").getValue();
-                        String patientLastName = (String) snapshot.child("lastName").getValue();
-                        String patient = patientLastName + "_" + patientFirstName;
-                        String city = spinnerCity.getSelectedItem().toString();
-                        String hospital = spinnerHospital.getSelectedItem().toString();
-                        String specialization = spinnerSpecialization.getSelectedItem().toString();
-                        String dateAndTime  = editTextDateTime.getText().toString();
-                        addConsultation(patient, city, hospital, specialization, dateAndTime);
-                    }
+                        if(snapshot.exists()){
+                            Toast.makeText(ConsultationActivity.this, "Reservation already exists!", Toast.LENGTH_LONG).show();
+                        } else {
+                            addConsultation(city, hospital, specialization, dateAndTime);
+                        }
 
+                    }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
 
                     }
                 });
+
             }
         });
 
@@ -117,8 +159,11 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
         if( parent.getItemAtPosition(position).equals("Choose City")){
             spinnerHospital.setAdapter(null);
             spinnerSpecialization.setAdapter(null);
-            spinnerTime.setAdapter(null);
-            editTextDateTime.setVisibility(View.INVISIBLE);
+            //spinnerTime.setAdapter(null);
+            editTextDate.setVisibility(View.INVISIBLE);
+            editTextTime.setVisibility(View.INVISIBLE);
+            gridLayoutHours.setVisibility(View.INVISIBLE);
+            btnRequest.setVisibility(View.INVISIBLE);
 
         }else if (parent.getItemAtPosition(position).equals("Bucuresti")) {
             spinnerHospital.setAdapter(adapterHospitalsBucharest);
@@ -128,18 +173,27 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
 
                     if(parent.getItemAtPosition(position).equals("Choose Hospital")){
                         spinnerSpecialization.setAdapter(null);
-                        editTextDateTime.setVisibility(View.INVISIBLE);
-                        spinnerTime.setAdapter(null);
+                        editTextDate.setVisibility(View.INVISIBLE);
+                        editTextTime.setVisibility(View.INVISIBLE);
+                        gridLayoutHours.setVisibility(View.INVISIBLE);
+                        btnRequest.setVisibility(View.INVISIBLE);
+                        //spinnerTime.setAdapter(null);
                     }else {
                         spinnerSpecialization.setAdapter(adapterSpecialization);
                         spinnerSpecialization.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
                                 if(parent.getItemAtPosition(position).equals("Choose Specialization")){
-                                    editTextDateTime.setVisibility(View.INVISIBLE);
-                                    spinnerTime.setAdapter(null);
+                                    editTextDate.setVisibility(View.INVISIBLE);
+                                    editTextTime.setVisibility(View.INVISIBLE);
+                                    gridLayoutHours.setVisibility(View.INVISIBLE);
+                                    btnRequest.setVisibility(View.INVISIBLE);
+                                    //spinnerTime.setAdapter(null);
                                 }else {
-                                    editTextDateTime.setVisibility(View.VISIBLE);
+                                    editTextDate.setVisibility(View.VISIBLE);
+                                    editTextTime.setVisibility(View.VISIBLE);
+                                    gridLayoutHours.setVisibility(View.VISIBLE);
+                                    btnRequest.setVisibility(View.VISIBLE);
 
 
                                     
@@ -150,18 +204,18 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
 
 
 
-                                    spinnerTime.setAdapter(adapterTime);
-                                    spinnerTime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                        @Override
-                                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-                                        }
-
-                                        @Override
-                                        public void onNothingSelected(AdapterView<?> adapterView) {
-
-                                        }
-                                    });
+//                                    spinnerTime.setAdapter(adapterTime);
+//                                    spinnerTime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//                                        @Override
+//                                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//
+//                                        }
+//
+//                                        @Override
+//                                        public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//                                        }
+//                                    });
                                 }
                             }
 
@@ -190,16 +244,25 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
 
                     if(parent.getItemAtPosition(position).equals("Choose Hospital")){
                         spinnerSpecialization.setAdapter(null);
-                        editTextDateTime.setVisibility(View.INVISIBLE);
+                        editTextDate.setVisibility(View.INVISIBLE);
+                        editTextTime.setVisibility(View.INVISIBLE);
+                        gridLayoutHours.setVisibility(View.INVISIBLE);
+                        btnRequest.setVisibility(View.INVISIBLE);
                     }else {
                         spinnerSpecialization.setAdapter(adapterSpecialization);
                         spinnerSpecialization.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
                                 if(parent.getItemAtPosition(position).equals("Choose Specialization")){
-                                    editTextDateTime.setVisibility(View.INVISIBLE);
+                                    editTextDate.setVisibility(View.INVISIBLE);
+                                    editTextTime.setVisibility(View.INVISIBLE);
+                                    gridLayoutHours.setVisibility(View.INVISIBLE);
+                                    btnRequest.setVisibility(View.INVISIBLE);
                                 }else {
-                                    editTextDateTime.setVisibility(View.VISIBLE);
+                                    editTextDate.setVisibility(View.VISIBLE);
+                                    editTextTime.setVisibility(View.VISIBLE);
+                                    gridLayoutHours.setVisibility(View.VISIBLE);
+                                    btnRequest.setVisibility(View.VISIBLE);
                                 }
                             }
                             @Override
@@ -225,7 +288,7 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
 
     }
 
-    private void showDateTimeDialog(EditText editTextDateTime){
+    private void showDateTimeDialog(EditText editTextDate){
         Calendar calendar = Calendar.getInstance();
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -234,18 +297,21 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-                        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                        calendar.set(Calendar.MINUTE, minute);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd");
+                editTextDate.setText((simpleDateFormat.format(calendar.getTime())));
 
-                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd HH:mm");
-                        editTextDateTime.setText((simpleDateFormat.format(calendar.getTime())));
-                    }
-                };
-
-                new TimePickerDialog(ConsultationActivity.this, timeSetListener, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false).show();
+//                TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
+//                    @Override
+//                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+//                        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+//                        calendar.set(Calendar.MINUTE, minute);
+//
+//                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd HH:mm");
+//                        editTextDateTime.setText((simpleDateFormat.format(calendar.getTime())));
+//                    }
+//                };
+//
+//                new TimePickerDialog(ConsultationActivity.this, timeSetListener, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false).show();
             }
         };
 
@@ -253,26 +319,25 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
     }
 
 
-    public void addConsultation(String patient, String city, String hospital, String specialization, String dateAndTime){
-        Consultation consultation = new Consultation(patient, city, hospital, specialization, dateAndTime);
+    public void addConsultation( String city, String hospital, String specialization, String dateAndTime){
+        Consultation consultation = new Consultation(city, hospital, specialization, dateAndTime);
 
-
-
-        FirebaseDatabase.getInstance().getReference().child("Occupied_Dates").addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference("Occupied_Dates").child(dateAndTime).setValue("True");
+        FirebaseDatabase.getInstance().getReference("Consultations")
+                .child(uid)
+                .child((dateAndTime))
+                .setValue(consultation).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.hasChild(dateAndTime)){
-                    Toast.makeText(ConsultationActivity.this, "Exista deja data asta boss", Toast.LENGTH_LONG).show();
-                }else {
-                    Toast.makeText(ConsultationActivity.this, "idk", Toast.LENGTH_LONG).show();
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(ConsultationActivity.this, "Consultation has been created!", Toast.LENGTH_LONG).show();
                 }
-            }
+                else{
+                    Toast.makeText(ConsultationActivity.this, "Consultation has not been created!", Toast.LENGTH_LONG).show();
+                }
+            }});
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
 
 //        consultationDetails.addValueEventListener(new ValueEventListener() {
 //            @Override
@@ -280,20 +345,7 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
 //                if(snapshot.hasChild(dateAndTime)){
 //
 //                } else {
-//                    FirebaseDatabase.getInstance().getReference("Occupied_Dates").child(dateAndTime).setValue("True");
-//                    FirebaseDatabase.getInstance().getReference("Consultations")
-//                            .child(uid)
-//                            .child((dateAndTime))
-//                            .setValue(consultation).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<Void> task) {
-//                            if(task.isSuccessful()){
-//                                Toast.makeText(ConsultationActivity.this, "Consultation has been created!", Toast.LENGTH_LONG).show();
-//                            }
-//                            else{
-//                                Toast.makeText(ConsultationActivity.this, "Consultation has not been created!", Toast.LENGTH_LONG).show();
-//                            }
-//                        }});
+//
 //                }
 //            }
 //
@@ -310,27 +362,6 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
 
 
 
-
-
-
-
-
-
-        userDetails.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String firstName = (String) snapshot.child("firstName").getValue();
-                String lastName = (String) snapshot.child("lastName").getValue();
-
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
 
     }
