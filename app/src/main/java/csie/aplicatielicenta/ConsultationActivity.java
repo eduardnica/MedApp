@@ -299,12 +299,6 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
 
 
 
-
-
-
-
-
-
         btnRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -392,6 +386,13 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
 
 
 
+
+
+
+
+
+
+
                                 }
                             }
 
@@ -444,6 +445,14 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
                                     editTextTime.setVisibility(View.VISIBLE);
                                     gridLayoutHours.setVisibility(View.VISIBLE);
                                     btnRequest.setVisibility(View.VISIBLE);
+
+
+
+
+
+
+
+
                                 }
                             }
                             @Override
@@ -484,9 +493,6 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
         };
         new DatePickerDialog(ConsultationActivity.this,dateSetListener, calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
-
-
-
 
     public void addConsultation( String city, String hospital, String specialization, String dateAndTime){
         Consultation consultation = new Consultation(city, hospital, specialization, dateAndTime);
