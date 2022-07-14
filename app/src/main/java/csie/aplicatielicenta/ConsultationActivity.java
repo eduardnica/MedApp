@@ -235,7 +235,7 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
                 if(date.isEmpty() || time.isEmpty()){
                     Toast.makeText(ConsultationActivity.this, "Please choose a date and time!", Toast.LENGTH_LONG).show();
                 } else {
-                    FirebaseDatabase.getInstance().getReference().child("Occupied_Dates").child(spinnerSpecialization.getSelectedItem().toString()).child(editTextDate.getText().toString() + " " + editTextTime.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    FirebaseDatabase.getInstance().getReference().child("Occupied_Dates").child(spinnerHospital.getSelectedItem().toString()).child(spinnerSpecialization.getSelectedItem().toString()).child(editTextDate.getText().toString() + " " + editTextTime.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if(snapshot.exists()){
@@ -262,7 +262,6 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
         if( parent.getItemAtPosition(position).equals("Choose City")){
             spinnerHospital.setAdapter(null);
             spinnerSpecialization.setAdapter(null);
-            //spinnerTime.setAdapter(null);
             editTextDate.setVisibility(View.INVISIBLE);
             editTextTime.setVisibility(View.INVISIBLE);
             gridLayoutHours.setVisibility(View.INVISIBLE);
@@ -292,31 +291,12 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
                                     editTextTime.setVisibility(View.INVISIBLE);
                                     gridLayoutHours.setVisibility(View.INVISIBLE);
                                     btnRequest.setVisibility(View.INVISIBLE);
-                                    //spinnerTime.setAdapter(null);
                                 }else {
                                     editTextDate.setVisibility(View.VISIBLE);
                                     editTextTime.setVisibility(View.VISIBLE);
                                     gridLayoutHours.setVisibility(View.VISIBLE);
                                     btnRequest.setVisibility(View.VISIBLE);
                                     checkAvailability(editTextDate);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                                 }
                             }
@@ -331,16 +311,6 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
                 @Override
                 public void onNothingSelected(AdapterView<?> adapterView) { }
             });
-
-
-
-
-
-
-
-
-
-
 
 
         } else if (parent.getItemAtPosition(position).equals("Cluj")){
@@ -360,6 +330,7 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
                         spinnerSpecialization.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
+                                editTextDate.getText().clear();
                                 if(parent.getItemAtPosition(position).equals("Choose Specialization")){
                                     editTextDate.setVisibility(View.INVISIBLE);
                                     editTextTime.setVisibility(View.INVISIBLE);
@@ -370,13 +341,7 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
                                     editTextTime.setVisibility(View.VISIBLE);
                                     gridLayoutHours.setVisibility(View.VISIBLE);
                                     btnRequest.setVisibility(View.VISIBLE);
-
-
-
-
-
-
-
+                                    checkAvailability(editTextDate);
 
                                 }
                             }
@@ -389,11 +354,6 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
                 public void onNothingSelected(AdapterView<?> adapterView) {
                 }
             });
-
-
-
-            String text = parent.getItemAtPosition(position).toString();
-            Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -421,7 +381,7 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
 
     public void addConsultation( String city, String hospital, String specialization, String dateAndTime){
         Consultation consultation = new Consultation(city, hospital, specialization, dateAndTime);
-        FirebaseDatabase.getInstance().getReference("Occupied_Dates").child(specialization).child(dateAndTime).setValue("True");
+        FirebaseDatabase.getInstance().getReference("Occupied_Dates").child(hospital).child(specialization).child(dateAndTime).setValue("True");
         FirebaseDatabase.getInstance().getReference("Consultations")
                 .child(uid)
                 .child((dateAndTime))
@@ -446,7 +406,7 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
             @Override
             public void afterTextChanged(Editable editable) {
-                FirebaseDatabase.getInstance().getReference().child("Occupied_Dates").child(spinnerSpecialization.getSelectedItem().toString()).addValueEventListener(new ValueEventListener() {
+                FirebaseDatabase.getInstance().getReference().child("Occupied_Dates").child(spinnerHospital.getSelectedItem().toString()).child(spinnerSpecialization.getSelectedItem().toString()).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.child(editTextDate.getText().toString() + " " + btnHour8.getText().toString()).exists()){
