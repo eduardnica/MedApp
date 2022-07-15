@@ -14,4 +14,16 @@ public class Consultation {
         this.specialization = specialization;
         this.dateAndTime = dateAndTime;
     }
+
+    public String getHospital() {
+        return hospital;
+    }
+
+    public String getSpecialization() {
+        return specialization;
+    }
+
+    public String getDateAndTime() {
+        return dateAndTime;
+    }
 }

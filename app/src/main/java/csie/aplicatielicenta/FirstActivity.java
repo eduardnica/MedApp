@@ -32,7 +32,8 @@ public class FirstActivity extends AppCompatActivity {
         btnMyConsultations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent myConsultations = new Intent(view.getContext(), MyConsultationsActivity.class);
+                startActivity(myConsultations);
             }
         });
 
