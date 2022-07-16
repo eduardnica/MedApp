@@ -10,7 +10,7 @@ import com.google.android.material.button.MaterialButton;
 
 public class FirstActivity extends AppCompatActivity {
 
-    MaterialButton btnDashboard, btnMyConsultations, btnConsultation;
+    MaterialButton btnDashboard, btnMyConsultations, btnConsultation, btnChat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +20,7 @@ public class FirstActivity extends AppCompatActivity {
         btnDashboard = findViewById(R.id.btnDashboard);
         btnMyConsultations = findViewById(R.id.btnMyConsultations);
         btnConsultation = findViewById(R.id.btnConsultation);
+        btnChat = findViewById(R.id.btnChat);
 
         btnDashboard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,6 +43,14 @@ public class FirstActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent consultation = new Intent(view.getContext(), ConsultationActivity.class);
                 startActivity(consultation);
+            }
+        });
+
+        btnChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent chat = new Intent(view.getContext(), ChatActivity.class);
+                startActivity(chat);
             }
         });
 

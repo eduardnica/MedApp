@@ -29,9 +29,13 @@
 
     <string-array name="specialization">
         <item>Choose Specialization</item>
-        <item>ORL</item>
+        <item>Cardiologie</item>
+        <item>Chirurgie generala</item>
         <item>Medicina generala</item>
         <item>Medicina interna</item>
+        <item>Oftalmologie</item>
+        <item>ORL</item>
+        <item>Stomatologie</item>
 
     </string-array>
 
@@ -47,9 +51,6 @@
         <item>11:30 - 12:00</item>
 
     </string-array>
-
-
-
 
 
 </resources>

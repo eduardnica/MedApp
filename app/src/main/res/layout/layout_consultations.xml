@@ -16,9 +16,8 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="10dp"
-            android:contentDescription="@string/app_name"
             android:padding="5dp"
-            android:src="@drawable/consultation_bk" />
+            android:src="@drawable/my_consultation_bk" />
 
         <!--Text View to display Course Name-->
         <TextView
