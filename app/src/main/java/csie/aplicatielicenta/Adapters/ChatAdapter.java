@@ -44,13 +44,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             holder.oppoLayout.setVisibility(View.GONE);
 
             holder.myMessage.setText(list2.getMessage());
-            holder.myTime.setText(list2.getDate() + " " + list2.getTime());
+           // holder.myTime.setText(list2.getDate() + " " + list2.getTime());
         } else {
             holder.myLayout.setVisibility(View.GONE);
             holder.oppoLayout.setVisibility(View.VISIBLE);
 
             holder.oppoMessage.setText(list2.getMessage());
-            holder.oppoTime.setText(list2.getDate() + " " + list2.getTime());
+            //holder.oppoTime.setText(list2.getDate() + " " + list2.getTime());
         }
     }
 
@@ -76,8 +76,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             myLayout = itemView.findViewById(R.id.myLayout);
             oppoMessage = itemView.findViewById(R.id.oppoMessage);
             myMessage = itemView.findViewById(R.id.myMessage);
-            oppoTime = itemView.findViewById(R.id.oppoMsgTime);
-            myTime = itemView.findViewById(R.id.myMsgTime);
+            //oppoTime = itemView.findViewById(R.id.oppoMsgTime);
+            //myTime = itemView.findViewById(R.id.myMsgTime);
         }
     }
 }

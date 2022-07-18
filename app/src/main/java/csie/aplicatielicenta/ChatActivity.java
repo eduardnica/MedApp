@@ -91,7 +91,7 @@ public class ChatActivity extends AppCompatActivity {
                                 Date date = new Date(timestamp.getTime());
                                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
                                 SimpleDateFormat simpleTimeFormat = new SimpleDateFormat("hh:mm aa", Locale.getDefault());
-                                ChatList chatList = new ChatList(getId, getName, getMsg, simpleDateFormat.format(date), simpleTimeFormat.format(date));
+                                ChatList chatList = new ChatList(getId, getName, getMsg, simpleDateFormat.format(date).toString(), simpleTimeFormat.format(date).toString());
                                 chatLists.add(chatList);
 
                                 if(loadingFirestTime || Long.parseLong(messageTimestamps) >  Long.parseLong(MemoryData.getLastMsgTs(ChatActivity.this, chatKey))){
