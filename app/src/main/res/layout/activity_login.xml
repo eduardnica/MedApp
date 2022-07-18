@@ -66,22 +66,12 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/forgotpass"
-        android:layout_below="@id/btnLogin"
-        android:text="Forgot password?"
-        android:textColor="@color/black"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="20dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/register"
-        android:layout_below="@id/forgotpass"
+        android:layout_below="@id/btnLogin"
         android:text="Register"
         android:textColor="@color/myColor"
         android:layout_centerHorizontal="true"
-        android:layout_margin="5px"/>
+        android:layout_margin="35dp"/>
 
 
 
