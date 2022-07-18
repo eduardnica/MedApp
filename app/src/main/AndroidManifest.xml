@@ -13,6 +13,9 @@
             android:name=".ChatActivity"
             android:exported="false" />
         <activity
+            android:name=".MessagesActivity"
+            android:exported="false" />
+        <activity
             android:name=".MyConsultationsActivity"
             android:exported="false" />
         <activity

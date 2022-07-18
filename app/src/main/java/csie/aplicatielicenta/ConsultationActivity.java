@@ -481,6 +481,4 @@ public class ConsultationActivity extends AppCompatActivity implements AdapterVi
         });
     }
 
-
-
 }

@@ -49,7 +49,7 @@ public class FirstActivity extends AppCompatActivity {
         btnChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent chat = new Intent(view.getContext(), ChatActivity.class);
+                Intent chat = new Intent(view.getContext(), MessagesActivity.class);
                 startActivity(chat);
             }
         });

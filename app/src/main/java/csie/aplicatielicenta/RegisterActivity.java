@@ -3,6 +3,7 @@ package csie.aplicatielicenta;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -66,12 +67,18 @@ public class RegisterActivity extends AppCompatActivity {
                 }
                 else {
                     createAccount(registerFirstName, registerLastName, registerEmail, registerPassword);
-
                 }
-
             }
-
         });
+
+
+
+//        if(!MemoryData.getData(this).isEmpty()){
+//            Intent intent = new Intent(RegisterActivity.this, MessagesActivity.class);
+//            intent.putExtra("id", MemoryData.getData(this));
+//            intent.putExtra("name", MemoryData.getData(this));
+//            intent.putExtra("email", MemoryData.getData(this));
+//        }
 
     }
 
