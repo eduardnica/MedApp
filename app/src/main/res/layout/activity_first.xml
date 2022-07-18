@@ -7,6 +7,7 @@
     android:layout_column="2"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="@drawable/my_med"
     android:rowCount="2"
     android:alignmentMode="alignMargins"
     tools:context=".FirstActivity">
@@ -16,7 +17,11 @@
         android:id="@+id/btnDashboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="30dp"
+
+        android:layout_marginTop="230dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="30dp"
         android:backgroundTint="@color/myColor"
         android:text="Dashboard" />
 
